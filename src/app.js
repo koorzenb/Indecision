@@ -1,5 +1,19 @@
 // https://reactjs.org/docs/events.html for all React events
 
+class IndecisionApp extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <Header />
+                <Action />
+                <Options />
+                <AddOption />
+            </div>
+        );
+    }
+}
+
 class Header extends React.Component {
 
     render() {
@@ -25,12 +39,21 @@ class Options extends React.Component {
     render() {
         return (
             <div>
-                <ol>Options</ol>
+                <ol>Options
+                    <Option />
+                </ol>
             </div>
         );
     }
 }
 
+class Option extends React.Component {
+    render() {
+        return (
+            <li>Option comp</li>
+        );
+    }
+}
 class AddOption extends React.Component {
     render() {
         return (
@@ -42,13 +65,4 @@ class AddOption extends React.Component {
 }
 
 
-const jsx = (
-    <div>
-        <Header />
-        <Action />
-        <Options />
-        <AddOption />
-    </div>
-);
-
-ReactDOM.render(jsx, document.getElementById("app"));
+ReactDOM.render(<IndecisionApp />, document.getElementById("app"));
