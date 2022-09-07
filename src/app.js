@@ -4,6 +4,7 @@ class IndecisionApp extends React.Component {
     constructor(props) {
         super(props);
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.handlePick = this.handlePick.bind(this);
         this.addOptionHandler = this.addOption.bind(this);
         this.state = {
@@ -12,19 +13,22 @@ class IndecisionApp extends React.Component {
     }
 
     handleDeleteOptions() {
-        this.setState(() => {
-            return {options: []};
-        });
+        this.setState(() => ({options: []}));
+
+    }
+
+    handleDeleteOption(option) {
+        this.setState(prevState =>
+            ({options: prevState.options.filter(_ => _ !== option)})
+        );
     }
 
     handlePick() {
         const randomIndex = Math.floor(Math.random() * this.state.options.length);
         let option = this.state.options[randomIndex];
-        this.setState(() => {   // not necesary to remember 
-            return {optionPicked: option};
-        });
-        alert(option);
+        this.setState(() => ({optionPicked: option})); // not necesary to remember 
 
+        alert(option);
     }
 
     addOption(option) {
@@ -34,10 +38,8 @@ class IndecisionApp extends React.Component {
             return 'type a unique value';
         }
 
-        this.setState(prevState => {
-            // do not use push -> will manipulate original array -> not what you want to do
-            return {options: prevState.options.concat(option)};
-        });
+        // do not use push -> will manipulate original array -> not what you want to do
+        this.setState((prevState) => ({options: prevState.options.concat(option)}));
     }
 
     render() {
@@ -51,6 +53,7 @@ class IndecisionApp extends React.Component {
                 <Options
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
+                    handleDeleteOption={this.handleDeleteOption}
                 />
                 <AddOption
                     options={this.state.options}
@@ -91,8 +94,15 @@ const Options = props => {
         <div>
             <button onClick={props.handleDeleteOptions}>Remove all</button>
             <ol>Options
-                {props.options.map((option) => <Option key={option} optionText={option} />)}
-                <Option />
+                {
+                    props.options.map((option) => (
+                        <Option
+                            key={option}
+                            optionText={option}
+                            handleDeleteOption={props.handleDeleteOption}
+                        />
+                    ))
+                }
             </ol>
         </div>
     );
@@ -100,7 +110,17 @@ const Options = props => {
 
 const Option = props => {
     return (
-        <div>{props.optionText}</div>
+        <div>
+            {props.optionText}
+            <button
+                onClick={(e) => {
+                    props.handleDeleteOption(props.optionText);
+                }}
+            >
+                remove
+            </button>
+        </div>
+
     );
 };
 class AddOption extends React.Component {
@@ -118,11 +138,7 @@ class AddOption extends React.Component {
         const option = e.target.elements.option.value.trim();
         const error = this.props.handleAddOption(option);
 
-        this.setState(() => {
-            return {
-                error
-            };
-        });
+        this.setState(() => ({error}));
     }
 
     render() {
