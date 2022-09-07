@@ -3,34 +3,41 @@
 class IndecisionApp extends React.Component {
     constructor(props) {
         super(props);
-        this.handleDeleteOptions = this.deleteOptions.bind(this);
-        this.handlePick = this.pickOption.bind(this);
+        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.handlePick = this.handlePick.bind(this);
         this.addOptionHandler = this.addOption.bind(this);
         this.state = {
-            options: ["One", "Two", "Five"]
+            options: []
         };
     }
 
-    addOption(option) {
-        this.setState(prevState => {
-            return {options: prevState.options.concat([option])};
-        });
-    }
-
-    deleteOptions() {
+    handleDeleteOptions() {
         this.setState(() => {
             return {options: []};
         });
     }
 
-    pickOption() {
+    handlePick() {
         const randomIndex = Math.floor(Math.random() * this.state.options.length);
         let option = this.state.options[randomIndex];
-        this.setState(() => {   // not necesary to remember state
+        this.setState(() => {   // not necesary to remember 
             return {optionPicked: option};
         });
         alert(option);
 
+    }
+
+    addOption(option) {
+        if (!option) {
+            return "type valid value";
+        } else if (this.state.options.indexOf(option) > -1) {
+            return 'type a unique value';
+        }
+
+        this.setState(prevState => {
+            // do not use push -> will manipulate original array -> not what you want to do
+            return {options: prevState.options.concat(option)};
+        });
     }
 
     render() {
@@ -45,7 +52,10 @@ class IndecisionApp extends React.Component {
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
                 />
-                <AddOption options={this.state.options} addOption={this.addOptionHandler} />
+                <AddOption
+                    options={this.state.options}
+                    handleAddOption={this.addOptionHandler}
+                />
             </div>
         );
     }
@@ -78,10 +88,6 @@ class Action extends React.Component {
     }
 }
 class Options extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props.handleDeleteOptions = this.props.handleDeleteOptions.bind(this);
-    }
     render() {
         return (
             <div>
@@ -98,27 +104,37 @@ class Options extends React.Component {
 class Option extends React.Component {
     render() {
         return (
-            <li>{this.props.optionText}</li>
+            <div>{this.props.optionText}</div>
         );
     }
 }
 class AddOption extends React.Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAddOption = this.handleSubmit.bind(this);
+        this.state = {
+            error: undefined
+        };
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
         const option = e.target.elements.option.value.trim();
-        if (option) this.props.addOption(option);
+        const error = this.props.handleAddOption(option);
+
+        this.setState(() => {
+            return {
+                error
+            };
+        });
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleAddOption}>
+                    {this.state.error && <p>{this.state.error}</p>}
                     <input type='text' name='option' placeholder='type an option' />
 
                     <button>Add Option</button>
