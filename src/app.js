@@ -3,21 +3,27 @@
 class IndecisionApp extends React.Component {
     constructor(props) {
         super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
+        this.handleDeleteOptions = this.deleteOptions.bind(this);
+        this.handlePick = this.pickOption.bind(this);
+        this.addOptionHandler = this.addOption.bind(this);
         this.state = {
-            options: ["One", "Two", "Five"],
-            optionPicked: null
+            options: ["One", "Two", "Five"]
         };
     }
 
-    handleDeleteOptions() {
+    addOption(option) {
+        this.setState(prevState => {
+            return {options: prevState.options.concat([option])};
+        });
+    }
+
+    deleteOptions() {
         this.setState(() => {
             return {options: []};
         });
     }
 
-    handlePick() {
+    pickOption() {
         const randomIndex = Math.floor(Math.random() * this.state.options.length);
         let option = this.state.options[randomIndex];
         this.setState(() => {   // not necesary to remember state
@@ -39,7 +45,7 @@ class IndecisionApp extends React.Component {
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
                 />
-                <AddOption options={this.state.options} />
+                <AddOption options={this.state.options} addOption={this.addOptionHandler} />
             </div>
         );
     }
@@ -72,6 +78,10 @@ class Action extends React.Component {
     }
 }
 class Options extends React.Component {
+    constructor(props) {
+        super(props);
+        this.props.handleDeleteOptions = this.props.handleDeleteOptions.bind(this);
+    }
     render() {
         return (
             <div>
@@ -93,11 +103,16 @@ class Option extends React.Component {
     }
 }
 class AddOption extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
         const option = e.target.elements.option.value.trim();
-        if (option) alert(option);
+        if (option) this.props.addOption(option);
     }
 
     render() {
