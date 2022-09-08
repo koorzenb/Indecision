@@ -5,12 +5,32 @@ class Counter extends React.Component {
         this.handleRemoveOne = this.handleRemoveOne.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.state = {
-            'count': props.count
+            'count': 0
         };
     }
 
+    componentDidMount() {
+        try {
+            const jsonData = localStorage.getItem("count");
+            const count = JSON.parse(jsonData);
+
+            if (count) {
+                this.setState(() => ({count}));
+            }
+        } catch (error) {
+            // Do nothing            
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.count != this.state.count) {
+            const jsonData = JSON.stringify(this.state.count);
+            localStorage.setItem("count", jsonData);
+        }
+    }
+
     handleAddOne() {
-        this.setState(previousState => ({count: previousState.count + 1});
+        this.setState(previousState => ({count: previousState.count + 1}));
     }
 
     handleRemoveOne() {
@@ -31,9 +51,5 @@ class Counter extends React.Component {
         );
     }
 }
-
-Counter.defaultProps = {
-    'count': 2
-};
 
 ReactDOM.render(<Counter count={0} />, document.getElementById('app'));
