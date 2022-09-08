@@ -5,14 +5,20 @@
   "author": "Barend Koorzen",
   "license": "MIT",
   "scripts": {
-    "serve": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
     "test-integration": "jest --help",
-    "build": "live-server ./public"
+    "build": "webpack --watch",
+    "serve": "live-server ./public"
   },
   "dependencies": {
     "babel-cli": "6.24.1",
     "babel-preset-env": "1.5.2",
     "babel-preset-react": "6.24.1",
     "live-server": "^1.2.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.11.0"
   }
 }
