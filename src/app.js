@@ -12,6 +12,26 @@ class IndecisionApp extends React.Component {
         };
     }
 
+    componentDidMount() {
+        try {
+            const jsonData = localStorage.getItem("options");
+            const options = JSON.parse(jsonData);
+
+            if (options) {
+                this.setState(() => ({options}));
+            }
+        } catch (error) {
+            // Do nothing            
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.options.length != this.state.options.length) {
+            const jsonData = JSON.stringify(this.state.options);
+            localStorage.setItem("options", jsonData);
+        }
+    }
+
     handleDeleteOptions() {
         this.setState(() => ({options: []}));
 
@@ -40,6 +60,8 @@ class IndecisionApp extends React.Component {
 
         // do not use push -> will manipulate original array -> not what you want to do
         this.setState((prevState) => ({options: prevState.options.concat(option)}));
+
+
     }
 
     render() {
@@ -93,7 +115,8 @@ const Options = props => {
     return (
         <div>
             <button onClick={props.handleDeleteOptions}>Remove all</button>
-            <ol>Options
+            {props.options.length === 0 && <p>Please add option</p>}
+            <ol>
                 {
                     props.options.map((option) => (
                         <Option
@@ -139,6 +162,8 @@ class AddOption extends React.Component {
         const error = this.props.handleAddOption(option);
 
         this.setState(() => ({error}));
+
+        if (!error) e.target.elements.option.value = '';
     }
 
     render() {
