@@ -15,7 +15,7 @@
   \********************/
 /***/ (() => {
 
-eval("console.log(\"app is running!\");\n\n//# sourceURL=webpack://indecision-app/./src/app.js?");
+eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/lib/index.js):\\nError: Cannot find module '@babel/core'\\nRequire stack:\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\babel-loader\\\\lib\\\\index.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\loader-runner\\\\lib\\\\loadLoader.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\loader-runner\\\\lib\\\\LoaderRunner.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack\\\\lib\\\\NormalModuleFactory.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack\\\\lib\\\\Compiler.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack\\\\lib\\\\webpack.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack\\\\lib\\\\index.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack-cli\\\\lib\\\\webpack-cli.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack-cli\\\\lib\\\\bootstrap.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack-cli\\\\bin\\\\cli.js\\n- C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\webpack\\\\bin\\\\webpack.js\\n babel-loader@8 requires Babel 7.x (the package '@babel/core'). If you'd like to use Babel 6.x ('babel-core'), you should install 'babel-loader@7'.\\n    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:956:15)\\n    at Function.Module._load (node:internal/modules/cjs/loader:804:27)\\n    at Module.require (node:internal/modules/cjs/loader:1028:19)\\n    at require (node:internal/modules/cjs/helpers:102:18)\\n    at Object.<anonymous> (C:\\\\Users\\\\koorz\\\\Documents\\\\Workspace\\\\Indecision\\\\node_modules\\\\babel-loader\\\\lib\\\\index.js:10:11)\\n    at Module._compile (node:internal/modules/cjs/loader:1126:14)\\n    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1180:10)\\n    at Module.load (node:internal/modules/cjs/loader:1004:32)\\n    at Function.Module._load (node:internal/modules/cjs/loader:839:12)\\n    at Module.require (node:internal/modules/cjs/loader:1028:19)\");\n\n//# sourceURL=webpack://indecision-app/./src/app.js?");
 
 /***/ })
 
@@ -24,7 +24,7 @@ eval("console.log(\"app is running!\");\n\n//# sourceURL=webpack://indecision-ap
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
 /******/ 	var __webpack_exports__ = {};
 /******/ 	__webpack_modules__["./src/app.js"]();
 /******/ 	
